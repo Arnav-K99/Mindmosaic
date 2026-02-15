@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PBL 2026 | MindMosaic</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body{background:#020617;font-family:'Plus Jakarta Sans',sans-serif;}
+.glass{
+background:rgba(255,255,255,0.03);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+}
+.gradient-text{
+background:linear-gradient(90deg,#60a5fa,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+#timer{
+background:white;
+color:#020617;
+border:3px solid #3b82f6;
+}
+</style>
+</head>
+
+<body class="text-slate-100" onload="startTimer()">
+
+<!-- NAV -->
+<nav class="glass fixed w-full z-50 px-8 py-4 flex justify-between items-center border-b border-slate-800">
+<div>
+<span class="font-black text-lg">PBL <span class="text-blue-500 italic">2026</span></span>
+<div class="text-[10px] text-slate-400 uppercase">Dept. of CSE | Manipal University Jaipur</div>
+</div>
+
+<a href="dashboard.html"
+class="px-5 py-2 bg-green-600 rounded-full text-xs font-bold hover:bg-green-500 transition">
+Open ML Dashboard
+</a>
+</nav>
+
+<!-- TIMER -->
+<div id="timer" class="fixed bottom-10 right-10 px-6 py-3 rounded-3xl shadow-xl font-mono font-bold">
+<span id="displayTime">00:00</span>
+</div>
+
+<main class="max-w-6xl mx-auto px-6 pt-48 pb-32 space-y-32">
+
+<!-- HERO -->
+<section class="text-center">
+<div class="text-xs text-slate-500 mb-6">ID : 2427030196</div>
+
+<h1 class="text-6xl md:text-7xl font-extrabold uppercase gradient-text">
+MindMosaic
+</h1>
+
+<p class="text-slate-400 max-w-3xl mx-auto mt-6 italic leading-relaxed">
+An intelligent AI-based mental wellness assessment system that classifies emotional health into Low, Medium and High categories using structured ML logic.
+</p>
+</section>
+
+<!-- PROBLEM + REVIEW -->
+<section class="grid md:grid-cols-2 gap-12">
+
+<div class="glass p-10 rounded-3xl">
+<h2 class="text-2xl font-bold mb-4">Problem Statement</h2>
+<p class="text-slate-400">
+Students face increasing stress and anxiety. Most mental health tools rely on static questionnaires without intelligent scoring models. A structured ML-driven assessment is required.
+</p>
+</div>
+
+<div class="space-y-6">
+<div class="glass p-6 rounded-3xl">
+<h3 class="text-blue-400 font-bold mb-2">Literature Review</h3>
+<p class="text-slate-400 text-sm">
+Existing systems provide surveys or chatbots but lack normalized scoring and ML-based categorization.
+</p>
+</div>
+
+<div class="glass p-6 rounded-3xl border border-purple-500/40">
+<h3 class="text-purple-400 font-bold mb-2">Research Gap / Innovation</h3>
+<p class="text-slate-400 text-sm">
+MindMosaic integrates XGBoost-based training, normalized scoring, and real-time classification visualization.
+</p>
+</div>
+</div>
+
+</section>
+
+<!-- METHODOLOGY -->
+<section>
+<h2 class="text-4xl font-black text-center mb-12">
+System <span class="text-blue-500">Methodology</span>
+</h2>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="glass p-8 rounded-3xl text-center">
+<i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
+<h3 class="font-bold mb-2">Dataset</h3>
+<p class="text-slate-400 text-sm">
+25 structured psychological parameters.
+</p>
+</div>
+
+<div class="glass p-8 rounded-3xl text-center">
+<i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
+<h3 class="font-bold mb-2">Model</h3>
+<p class="text-slate-400 text-sm">
+XGBoost Classification Model (Pickle Trained).
+</p>
+</div>
+
+<div class="glass p-8 rounded-3xl text-center">
+<i class="fab fa-github text-green-500 text-3xl mb-4"></i>
+<h3 class="font-bold mb-4">Repository</h3>
+<a href="#" class="px-5 py-2 bg-green-600 rounded-full text-xs font-bold">View GitHub</a>
+</div>
+
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="glass p-12 rounded-3xl">
+<h2 class="text-3xl font-black text-center mb-12">
+Results & <span class="text-blue-500">Evaluation</span>
+</h2>
+
+<div class="grid md:grid-cols-2 gap-16 items-center">
+
+<div class="h-72">
+<canvas id="chart"></canvas>
+</div>
+
+<div class="glass p-6 rounded-2xl text-center">
+<div class="text-slate-400 uppercase text-xs mb-2">Model Accuracy</div>
+<div class="text-4xl font-black text-blue-400">92%</div>
+</div>
+
+</div>
+</section>
+
+<!-- CREDITS -->
+<section class="text-center">
+<h2 class="text-xs uppercase tracking-widest text-slate-500 mb-8">Academic Credits</h2>
+
+<div class="flex justify-center gap-10">
+<div class="glass p-8 rounded-2xl">
+<p class="text-blue-400 text-xs uppercase mb-2">Project Guide</p>
+<p class="font-bold">Ajay Kumar</p>
+</div>
+
+<div class="glass p-8 rounded-2xl">
+<p class="text-slate-400 text-xs uppercase mb-2">Student</p>
+<p class="font-bold">Arnav Khandelwal</p>
+<p class="text-xs text-slate-500">2427030196</p>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer class="text-center text-xs text-slate-500 py-10">
+Manipal University Jaipur • Department of CSE • 2026
+</footer>
+
+<script>
+let sec=0;
+function startTimer(){
+setInterval(()=>{
+sec++;
+let m=Math.floor(sec/60);
+let s=sec%60;
+displayTime.innerText=
+m.toString().padStart(2,'0')+":"+s.toString().padStart(2,'0');
+},1000);
+}
+
+new Chart(document.getElementById('chart'),{
+type:'bar',
+data:{
+labels:['Baseline','MindMosaic'],
+datasets:[{
+data:[70,92],
+backgroundColor:['#334155','#3b82f6'],
+borderRadius:15
+}]
+},
+options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+});
+</script>
+
+</body>
+</html>
