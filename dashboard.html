@@ -18,6 +18,11 @@ font-family:'Plus Jakarta Sans',sans-serif;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.08);
+transition:all 0.3s ease;
+}
+.glass:hover{
+box-shadow:0 0 25px rgba(139,92,246,0.4);
+transform:translateY(-4px);
 }
 .option-box{
 cursor:pointer;
@@ -50,8 +55,8 @@ background:linear-gradient(90deg,#8b5cf6,#22d3ee);
 MindMosaic Mental Health Dashboard
 </h1>
 
-<div class="flex gap-6 mb-8">
-<input type="file" class="text-sm text-slate-300">
+<div class="flex gap-6 mb-8 flex-wrap">
+<input type="file" class="text-sm glass p-2 rounded-lg">
 <button onclick="useSampleData()" class="px-5 py-2 glass rounded-lg">
 Use Sample Data
 </button>
@@ -67,7 +72,7 @@ Train Model
 </div>
 
 <!-- RESULTS -->
-<div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+<div class="grid md:grid-cols-2 gap-12 items-center">
 
 <div class="grid grid-cols-2 gap-6">
 
@@ -93,61 +98,29 @@ Train Model
 
 </div>
 
-<!-- PREMIUM DOUGHNUT -->
 <div class="glass p-6 rounded-3xl flex justify-center items-center">
-<div class="w-44 h-44 relative">
-<canvas id="resultChart"></canvas>
-<div id="centerText" class="absolute inset-0 flex items-center justify-center text-lg font-bold text-white"></div>
+  <div class="w-40 h-40">
+    <canvas id="resultChart"></canvas>
+  </div>
 </div>
-</div>
+
 
 </div>
 
-<!-- MODEL DETAILS SECTION -->
-<div class="mb-10">
-<h2 class="text-2xl font-bold mb-6">Model Details</h2>
-
-<div class="glass p-8 rounded-3xl text-slate-300 leading-relaxed">
-<p><strong>Model Type:</strong> XGBoost Classifier</p>
-<p><strong>Features Used:</strong> 25 Psychological Parameters (PHQ-9, Anxiety, Suicide Risk Indicators)</p>
-<p><strong>Train/Test Split:</strong> 80% / 20%</p>
-<p><strong>Normalization:</strong> Non-Negative Scaling</p>
-<p><strong>Prediction Output:</strong> Low / Moderate / High Risk Classification</p>
-</div>
+<!-- MODEL DETAILS -->
+<div class="glass p-10 rounded-3xl mt-16">
+<h2 class="text-2xl font-bold mb-4">Model Details</h2>
+<p>Model Type: XGBoost Classifier</p>
+<p>Features Used: 25 Psychological Parameters</p>
+<p>Train/Test Split: 80% / 20%</p>
+<p>Normalization: Non-Negative Scaling</p>
 </div>
 
 </main>
 
 <script>
 
-// QUESTIONS
-const questions = [
-"Little interest or pleasure in doing things?",
-"Feeling down or hopeless?",
-"Sleep issues?",
-"Low energy?",
-"Poor appetite?",
-"Feeling like failure?",
-"Trouble concentrating?",
-"Restlessness?",
-"Self-harm thoughts?",
-"Life not worth living?",
-"Recurring escape thoughts?",
-"Emotionally overwhelmed?",
-"Sudden sadness?",
-"Feeling isolated?",
-"Lost motivation?",
-"Emotionally numb?",
-"Frequent negative thoughts?",
-"Specific self-harm ideas?",
-"Imagined acting on them?",
-"Hard to control thoughts?",
-"Close to acting?",
-"Made preparations?",
-"Intense during stress?",
-"Urgent impulses?",
-"Interfered with life?"
-];
+const questions = Array.from({length:25}, (_,i)=>`Question ${i+1}`);
 
 const options = [
 "Not at all",
@@ -215,22 +188,34 @@ let phqPercent = (phq/27)*100;
 let asqPercent = (asq/24)*100;
 let cssrsPercent = (cssrs/24)*100;
 
-let finalScore = phqPercent*0.4 + asqPercent*0.3 + cssrsPercent*0.3;
+// 🔥 PRIORITY-BASED CLASSIFICATION
 
 let level;
 let color;
 
-if(finalScore < 30){
-level="Low";
-color="text-green-400";
+if (cssrsPercent > 50) {
+    level = "High Risk";
+    color = "text-red-500";
 }
-else if(finalScore < 60){
-level="Moderate";
-color="text-yellow-400";
+else if (phqPercent > 70) {
+    level = "High Risk";
+    color = "text-red-500";
 }
-else{
-level="High Risk";
-color="text-red-500";
+else if (asqPercent > 70) {
+    level = "High Risk";
+    color = "text-red-500";
+}
+else if (
+    phqPercent >= 40 ||
+    asqPercent >= 40 ||
+    cssrsPercent >= 30
+) {
+    level = "Moderate";
+    color = "text-yellow-400";
+}
+else {
+    level = "Low";
+    color = "text-green-400";
 }
 
 document.getElementById("phqScore").innerText = phqPercent.toFixed(1)+"%";
@@ -240,8 +225,6 @@ document.getElementById("cssrsScore").innerText = cssrsPercent.toFixed(1)+"%";
 let finalEl = document.getElementById("finalLevel");
 finalEl.innerText = level;
 finalEl.className = `text-2xl font-bold ${color}`;
-
-document.getElementById("centerText").innerText = finalScore.toFixed(0)+"%";
 
 if(chart) chart.destroy();
 
@@ -256,10 +239,20 @@ borderWidth:0
 }]
 },
 options:{
+responsive:true,
+maintainAspectRatio:false,
 cutout:"75%",
-animation:{animateRotate:true,duration:1200},
-plugins:{legend:{position:"bottom"}}
+plugins:{
+legend:{
+position:"bottom",
+labels:{
+boxWidth:12,
+padding:10
 }
+}
+}
+}
+
 });
 
 }
